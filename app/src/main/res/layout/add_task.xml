@@ -15,10 +15,10 @@
         android:orientation="vertical"
         android:padding="15dp"
         android:layout_marginVertical="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/btAddPost">
+        app:layout_constraintBottom_toTopOf="@+id/btnAddTask">
 
         <EditText
-            android:id="@+id/etAddPostTitle"
+            android:id="@+id/etAddTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Task Title ..."
@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/etAddPostText"
+            android:id="@+id/etAddTaskText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Description ... "
@@ -41,12 +41,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btAddPost"
+        android:id="@+id/btnAddTask"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAddPostText"
+        app:layout_constraintTop_toBottomOf="@+id/etAddTaskText"
         android:text="Add Task"
         android:textAlignment="center"/>
 
