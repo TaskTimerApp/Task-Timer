@@ -51,11 +51,11 @@
 
         <Button
             android:id="@+id/addtaskIB"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="@drawable/round_btn"
-            android:text="add"
+            android:text="submit"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/gold"
             android:textSize="10sp"/>
 
