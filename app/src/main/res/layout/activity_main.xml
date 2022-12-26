@@ -1,77 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:padding="5dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="10dp"
+    android:layout_margin="5dp">
 
-
-    <LinearLayout
-        android:id="@+id/llayout1"
+    <TextView
+        android:id="@+id/logInTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text="Log In"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/gold"
+        android:background="@color/blue"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutsignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.478"
+        app:layout_constraintTop_toBottomOf="@id/logInTv">
+
 
         <EditText
-            android:id="@+id/newtaskTV"
+            android:id="@+id/userNameEtLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Username..."
+            android:textColorHint="@color/gold"
+            android:padding="8dp"
+            android:textAlignment="center"
+            tools:ignore="DuplicateIds" />
+
+        <EditText
+            android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="What's up?"/>
-
-        <Button
-            android:id="@+id/StartBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start" />
+            android:ems="10"
+            android:hint="Password..."
+            android:textColorHint="@color/gold"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/userNameEtLogin"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llayout2"
+    <Button
+        android:id="@+id/logInBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/round_btn"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/gold"
+        android:text="Log In"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutsignIn" />
+
+
+    <TextView
+        android:id="@+id/signUpTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/llayout1"
-        android:padding="8dp">
+        android:text="Sign Up"
+        android:layout_marginVertical="50dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/gold"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/logInBtn"
+        android:background="@color/blue"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
+        android:id="@+id/linearLayoutsignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signUpTv">
+
+        <EditText
+            android:id="@+id/userNameEtSignup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/todayTV"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Today"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Username..."
+            android:textColorHint="@color/gold"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
 
-            <TextView
-                android:id="@+id/totalTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total: 7:00"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/emailEtSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Email..."
+            android:textColorHint="@color/gold"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/passwordEtSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Password..."
+            android:textColorHint="@color/gold"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainRV"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp"
-        app:layout_constraintTop_toBottomOf="@id/llayout2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="5dp"/>
+    <Button
+        android:id="@+id/signUpBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/round_btn"
+        android:padding="10dp"
+        android:text="Sign Up"
+        android:textStyle="bold"
+        android:textColor="@color/gold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutsignUp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
