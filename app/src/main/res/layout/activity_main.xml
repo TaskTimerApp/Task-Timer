@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="10dp"
+    tools:context=".MainActivity"
     android:layout_margin="5dp">
 
     <TextView
@@ -44,7 +45,7 @@
             tools:ignore="DuplicateIds" />
 
         <EditText
-            android:id="@+id/passwordEt"
+            android:id="@+id/passwordEtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,7 +59,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/logInBtn"
+        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:gravity="center"
@@ -82,7 +83,7 @@
         android:textSize="30sp"
         android:textColor="@color/gold"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@id/logInBtn"
+        app:layout_constraintTop_toBottomOf="@id/loginBtn"
         android:background="@color/blue"/>
 
 
@@ -109,21 +110,7 @@
             android:layout_marginBottom="20dp"/>
 
         <EditText
-            android:id="@+id/emailEtSignUp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Email..."
-            android:textColorHint="@color/gold"
-            android:inputType="textEmailAddress"
-            android:textAlignment="center"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"/>
-
-        <EditText
-            android:id="@+id/passwordEtSignUp"
+            android:id="@+id/userPasswordEtSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -136,10 +123,23 @@
             android:padding="10dp"
             android:layout_marginBottom="20dp"/>
 
+        <EditText
+            android:id="@+id/imageURLEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Image URL..."
+            android:textColorHint="@color/gold"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"/>
+
     </LinearLayout>
 
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/signupBtn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:padding="10dp"
