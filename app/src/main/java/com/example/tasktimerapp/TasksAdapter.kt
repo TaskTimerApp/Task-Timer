@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.tasks_row.view.*
 
-class TasksAdapter(var activity: HomePageActivity):
-
-    ListAdapter<Tasks, TasksAdapter.ItemViewHolder>(TaskDiffUtil()) {
-
+class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayList<Tasks>):
+    RecyclerView.Adapter<TasksAdapter.ItemViewHolder>() {
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -28,7 +26,7 @@ class TasksAdapter(var activity: HomePageActivity):
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        val taskList = getItem(position)
+        val taskList = tasksList[position]
 
         holder.itemView.apply {
 
@@ -60,6 +58,13 @@ class TasksAdapter(var activity: HomePageActivity):
             deleteTaskIcon.setOnClickListener { activity.deleteTask(taskList) }
         }
 
+    }
+
+    override fun getItemCount() = tasksList.size
+
+    fun rvUpdate(tasksListUpdate: ArrayList<Tasks>){
+        this.tasksList = tasksListUpdate
+        notifyDataSetChanged()
     }
 
 

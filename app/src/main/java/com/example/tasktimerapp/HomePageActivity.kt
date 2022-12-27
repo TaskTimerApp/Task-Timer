@@ -66,7 +66,7 @@ class HomePageActivity : AppCompatActivity() {
 
         /////////////////////////////////
         ////////SHOW DATA ON RV////////
-        rvAdapter = TasksAdapter(this)
+        rvAdapter = TasksAdapter(this, tasksList)
         rvTasks.adapter = rvAdapter
         rvTasks.layoutManager = LinearLayoutManager(this)
         //////////////////////////////////
@@ -136,7 +136,7 @@ class HomePageActivity : AppCompatActivity() {
                         )
                     }
                 }
-                rvAdapter.submitList(tasksList)
+                rvAdapter.rvUpdate(tasksList)
                 calcTotalTimer()
             }
             .addOnFailureListener { exception ->
