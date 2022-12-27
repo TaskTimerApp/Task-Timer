@@ -62,7 +62,7 @@ class TaskDetailsActivity : AppCompatActivity() {
         timerRunning = intent.getBooleanExtra("running", false)
 
         taskData = Tasks(taskPK, userId, taskName, taskDetails, taskTimer, timerRunning)
-        //Log.d("TaskData", "$taskData")
+        readData()
 
         pauseOffset = taskData.timer
         running = taskData.running
@@ -76,7 +76,7 @@ class TaskDetailsActivity : AppCompatActivity() {
 
 
         tvTimer = findViewById(R.id.tvTimer)
-        tvTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset)
+        tvTimer.base = SystemClock.elapsedRealtime() - pauseOffset
 
 
         btnStart = findViewById(R.id.btnStart)
@@ -89,30 +89,30 @@ class TaskDetailsActivity : AppCompatActivity() {
         btnReset.setOnClickListener { reset() }
         btnBack.setOnClickListener { homePageActivity() }
 
-        //Check if Timer true
+        //////////////////////////////////////
+        ////////CHECK TIMER CONDITIONS////////
         if (taskData.running){
             start(taskData.running)
         }
         else {
             stop(taskData.running)
         }
-
-//        while (taskData.running){
-//            pauseOffset = SystemClock.elapsedRealtime() - tvTimer.getBase()
-//            taskData.timer = pauseOffset
-//            updateTimer()
-//        }
+        ///////////////////////////////////////
+        ///////////////////////////////////////
 
 
-    }
+    }/** End of OnCreate */
 
-
+    //////////////////////////////////////////////////
+    //////////////////START BUTTON///////////////////
+    ////////////////////////////////////////////////
     private fun start(runningStatus : Boolean){
         if (!runningStatus) {
+
             //Check if there are running timers
             checkRunningTimers(taskData.pk)
 
-            tvTimer.setBase(SystemClock.elapsedRealtime() - pauseOffset)
+            tvTimer.base = SystemClock.elapsedRealtime() - pauseOffset
             tvTimer.start()
             running = true
 
@@ -138,11 +138,47 @@ class TaskDetailsActivity : AppCompatActivity() {
         }
     }
 
+    //////////////////////////////////////////////////
+    //////////////////READ DATA//////////////////////
+    ////////////////////////////////////////////////
+    private fun readData(){
+        tasksList.clear()
+        db.collection("userTasks")
+            .get()
+            .addOnSuccessListener { tasksResult ->
 
+                for (document in tasksResult) {
+
+                    val userID = document.data.get("userId").toString()
+                    val name = document.data.get("name").toString()
+                    val details = document.data.get("details").toString()
+                    val timer = document.data.get("timer")
+                    val running = document.data.get("running")
+
+                    if (userID == userId) {
+                        tasksList.add(Tasks(
+                            document.id,
+                            userID,
+                            name,
+                            details,
+                            timer as Long,
+                            running as Boolean
+                        ))
+                    }  /**  End of if condition */
+                }  /**  End of for loop */
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error getting documents.", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////STOP BUTTON////////////////////
+    ////////////////////////////////////////////////
     private fun stop(runningStatues : Boolean){
         if (runningStatues) {
             tvTimer.stop()
-            pauseOffset = SystemClock.elapsedRealtime() - tvTimer.getBase()
+            pauseOffset = SystemClock.elapsedRealtime() - tvTimer.base
             running = false
 
             taskData.running = running
@@ -160,9 +196,11 @@ class TaskDetailsActivity : AppCompatActivity() {
         }
     }
 
-
+    //////////////////////////////////////////////////
+    //////////////////RESET BUTTON///////////////////
+    ////////////////////////////////////////////////
     private fun reset(){
-        tvTimer.setBase(SystemClock.elapsedRealtime())
+        tvTimer.base = SystemClock.elapsedRealtime()
         pauseOffset = 0
         running = false
         tvTimer.stop()
@@ -180,7 +218,9 @@ class TaskDetailsActivity : AppCompatActivity() {
     }
 
 
-    //Update task data
+    //////////////////////////////////////////////////////
+    //////////////////UPDATE TASK DATA///////////////////
+    ////////////////////////////////////////////////////
     private fun updateTimer(){
         CoroutineScope(Dispatchers.IO).launch {
             var updatedTask = TasksFB(taskData.userId, taskData.name, taskData.details, taskData.timer, taskData.running)
@@ -190,10 +230,12 @@ class TaskDetailsActivity : AppCompatActivity() {
     }
 
 
-    //Back to homePage
+    /////////////////////////////////////////////////////
+    //////////////////BACK TO HOMEPAGE///////////////////
+    ////////////////////////////////////////////////////
     private fun homePageActivity() {
         if (taskData.running) {
-            pauseOffset = SystemClock.elapsedRealtime() - tvTimer.getBase()
+            pauseOffset = SystemClock.elapsedRealtime() - tvTimer.base
             taskData.timer = pauseOffset
             updateTimer()
         }
@@ -205,7 +247,9 @@ class TaskDetailsActivity : AppCompatActivity() {
     }
 
 
-    //Check if there are running timers
+    /////////////////////////////////////////////////////
+    //////////////////CHECK TIMER STATE//////////////////
+    ////////////////////////////////////////////////////
     private fun checkRunningTimers(taskPK : String){
         tasksList.clear()
         db.collection("userTasks")
@@ -248,7 +292,9 @@ class TaskDetailsActivity : AppCompatActivity() {
     }
 
 
-    //update running status to false
+    /////////////////////////////////////////////////////
+    //////////////////SET RUNNING STATUS TO FALSE////////
+    ////////////////////////////////////////////////////
     private fun updateRunningStatus(taskList: Tasks){
         if (taskList != null) {
             val updatedTask = TasksFB(

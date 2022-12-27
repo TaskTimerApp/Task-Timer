@@ -17,8 +17,6 @@ import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
-
-
     val db = Firebase.firestore
     var userId = ""
     var userName = ""
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         signupBtn.setOnClickListener {
             if (userNameEtSignup.text.isNotEmpty() && userPasswordEtSignup.text.isNotEmpty() && imageURLEt.text.isNotEmpty()) {
-                addUser()
+                signupUser()
             } else {
                 Toast.makeText(this, "All field are required", Toast.LENGTH_SHORT).show()
             }
@@ -68,9 +66,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    //Sign up
-    private fun addUser(){
+    //////////////////////////////////////////////////
+    /////////////////SIGNUP//////////////////////
+    ////////////////////////////////////////////////
+    private fun signupUser(){
         val username = userNameEtSignup.text.toString()
         val password = userPasswordEtSignup.text.toString()
         val image = imageURLEt.text.toString()
@@ -91,7 +90,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //Login
+    //////////////////////////////////////////////////
+    //////////////////LOGIN//////////////////////////
+    ////////////////////////////////////////////////
     private fun loginUser(){
         usersList.clear()
         db.collection("users")
@@ -110,7 +111,9 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    //check if user is exist
+    //////////////////////////////////////////////////
+    //////////////////CHECK USER//////////////////////
+    ////////////////////////////////////////////////
     private fun checkUser(){
         val usernameET = userNameEtLogin.text.toString()
         val passwordET = passwordEtLogin.text.toString()
@@ -134,7 +137,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    //////////////////////////////////////////////////
+    //////////////////HOME PAGE ACTIVITY/////////////
+    ////////////////////////////////////////////////
     private fun homePageActivity() {
         val intent = Intent(this, HomePageActivity::class.java)
         intent.putExtra("userId", userId)

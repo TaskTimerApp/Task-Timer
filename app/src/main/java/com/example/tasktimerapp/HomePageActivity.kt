@@ -24,7 +24,7 @@ class HomePageActivity : AppCompatActivity() {
     var img = ""
     private var tasksList: ArrayList<Tasks> = arrayListOf()
 
-    //Recycler View declare
+    /** Recycler View declare */
     private lateinit var rvTasks: RecyclerView
     private lateinit var rvAdapter: TasksAdapter
 
@@ -52,19 +52,25 @@ class HomePageActivity : AppCompatActivity() {
         usernameTV = findViewById(R.id.usernameTV)
         getUserImage()
 
-        //Total timer
+
         totalTimerTV = findViewById(R.id.totalTimerTV)
 
         rvTasks = findViewById(R.id.rvTasks)
 
-        //Read data from db
+        /////////////////////////////////
+        ////////READ DATA FROM DB////////
         tasksList = arrayListOf()
         readData()
+        //////////////////////////////////
+        //////////////////////////////////
 
-        //Show data on RV
-        rvAdapter = TasksAdapter(this ,tasksList)
+        /////////////////////////////////
+        ////////SHOW DATA ON RV////////
+        rvAdapter = TasksAdapter(this)
         rvTasks.adapter = rvAdapter
         rvTasks.layoutManager = LinearLayoutManager(this)
+        //////////////////////////////////
+        //////////////////////////////////
 
         btnAddTask = findViewById(R.id.btnAddTask)
         btnAddTask.setOnClickListener { addTaskActivity() }
@@ -130,7 +136,7 @@ class HomePageActivity : AppCompatActivity() {
                         )
                     }
                 }
-                rvAdapter.rvUpdate(tasksList)
+                rvAdapter.submitList(tasksList)
                 calcTotalTimer()
             }
             .addOnFailureListener { exception ->
@@ -142,6 +148,7 @@ class HomePageActivity : AppCompatActivity() {
     fun deleteTask(taskPK: Tasks){
         CoroutineScope(Dispatchers.IO).launch {
             db.collection("userTasks").document(taskPK.pk).delete()
+            pauseOffset = 0
             readData()
         }
         Toast.makeText(this, "Deleted", Toast.LENGTH_LONG).show()

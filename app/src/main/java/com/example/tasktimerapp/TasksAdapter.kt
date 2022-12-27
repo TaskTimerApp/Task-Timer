@@ -5,11 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.tasks_row.view.*
 
-class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayList<Tasks>):
-    RecyclerView.Adapter<TasksAdapter.ItemViewHolder>() {
+class TasksAdapter(var activity: HomePageActivity):
+
+    ListAdapter<Tasks, TasksAdapter.ItemViewHolder>(TaskDiffUtil()) {
+
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -24,15 +28,25 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        val taskList = tasksList[position]
+        val taskList = getItem(position)
+
         holder.itemView.apply {
 
             tvTaskTitle.text = taskList.name
             tvTaskDetails.text = taskList.details
             tvTimer.setBase(SystemClock.elapsedRealtime() - taskList.timer)
+
+            /////////////////////////////////
+            ////////CHECK TIMER STATE///////
             if (taskList.running) {
                 tvTimer.start()
+                tvTimer.setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_dark))
+            }else{
+                tvTimer.stop()
+                tvTimer.setTextColor(ContextCompat.getColor(context,R.color.blue))
             }
+            ///////////////////////////////
+            //////////////////////////////
 
             taskCard.setOnClickListener{
                 if (taskList.running) {
@@ -40,17 +54,13 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
                     taskList.timer = pauseOffset
                     Log.d("TimerAdapter", "Timer: ${taskList.timer}")
                 }
-                activity.taskDetailsActivity(taskList) }
+                activity.taskDetailsActivity(taskList)
+            }
 
             deleteTaskIcon.setOnClickListener { activity.deleteTask(taskList) }
         }
 
     }
 
-    override fun getItemCount() = tasksList.size
 
-    fun rvUpdate(tasksListUpdate: ArrayList<Tasks>){
-        this.tasksList = tasksListUpdate
-        notifyDataSetChanged()
-    }
 }
