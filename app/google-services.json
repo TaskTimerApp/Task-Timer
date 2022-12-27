@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "696492009322",
+    "project_id": "tasktimerapp-e478c",
+    "storage_bucket": "tasktimerapp-e478c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696492009322:android:c151d09eef4e8fbe3b2713",
+        "android_client_info": {
+          "package_name": "com.example.tasktimerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696492009322-g4eaqih886uhi1941r5md9dvesfdqskb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhr6Rmrl4I8poSCi_s7scoLn5lEmZhjZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696492009322-g4eaqih886uhi1941r5md9dvesfdqskb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

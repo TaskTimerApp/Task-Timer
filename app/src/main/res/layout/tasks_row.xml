@@ -8,7 +8,8 @@
     app:cardElevation="10dp"
     android:padding="5dp"
     android:layout_margin="8dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:id="@+id/taskCard">
 
 
 
@@ -25,7 +26,7 @@
             android:src="@drawable/logo"/>
 
         <TextView
-            android:id="@+id/taskNumberTV"
+            android:id="@+id/tvTaskTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -38,9 +39,10 @@
             android:paddingStart="5dp"/>
 
         <TextView
+            android:id="@+id/tvTaskDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/taskNumberTV"
+            android:layout_below="@id/tvTaskTitle"
             android:layout_toEndOf="@id/imageview"
             android:text="Task describtion.. "
             android:maxLines="1"
@@ -48,22 +50,33 @@
             android:textSize="15sp"
             android:paddingStart="5dp"/>
 
-
-        <TextView
+        <Chronometer
+            android:id="@+id/tvTimer"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="0:00"
             android:textColor="@color/blue"
             android:textSize="18sp"
             android:padding="5dp"
             android:layout_alignParentTop="true"
             android:textStyle="italic"
-            android:layout_toStartOf="@id/deleteImageView"/>
+            android:layout_toStartOf="@id/deleteTaskIcon"/>
+
+
+<!--        <TextView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="18sp"-->
+<!--            android:padding="5dp"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:textStyle="italic"-->
+<!--            android:layout_toStartOf="@id/deleteImageView"/>-->
 
 
         <ImageView
-            android:id="@+id/deleteImageView"
+            android:id="@+id/deleteTaskIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"

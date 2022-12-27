@@ -9,7 +9,8 @@
     android:padding="5dp"
     android:layout_margin="8dp"
     android:layout_gravity="center"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".TaskDetailsActivity">
 
 
         <LinearLayout
@@ -25,7 +26,7 @@
                 android:padding="5dp">
 
                 <ImageButton
-                    android:id="@+id/backbtn"
+                    android:id="@+id/btnBack"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
@@ -46,6 +47,7 @@
 
 
             <TextView
+                android:id="@+id/tvTaskName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Task Title"
@@ -55,6 +57,7 @@
                 android:gravity="center" />
 
             <TextView
+                android:id="@+id/tvTaskDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Task Details"
@@ -62,14 +65,23 @@
                 android:textSize="20sp"
                 android:gravity="center"/>
 
-            <TextView
+            <Chronometer
+                android:id="@+id/tvTimer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15:11:00"
                 android:textStyle="italic"
                 android:textColor="@color/blue"
                 android:textSize="30sp"
                 android:gravity="center"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="15:11:00"-->
+<!--                android:textStyle="italic"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:textSize="30sp"-->
+<!--                android:gravity="center"/>-->
 
             <LinearLayout
                 android:id="@+id/lll2"
@@ -84,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/lll">
 
                 <ImageButton
-                    android:id="@+id/startbtn"
+                    android:id="@+id/btnStart"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_margin="3dp"
@@ -93,7 +105,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/pausebtn"
+                    android:id="@+id/btnStop"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_margin="3dp"
@@ -102,7 +114,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/resetbtn"
+                    android:id="@+id/btnReset"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_margin="3dp"
