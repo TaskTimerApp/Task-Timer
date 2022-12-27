@@ -14,11 +14,11 @@
         <!-- Customize your theme here. -->
 
         <!--    Light mode-->
-        <color name="gold">#fbb87c</color>
-        <color name="blue">#63808a</color>
+<!--        <color name="gold">#fbb87c</color>-->
+<!--        <color name="blue">#63808a</color>-->
 
-        <!--    Night mode  -->
-        <color name="gold_o">#8F4B03</color>
-        <color name="blue_d">#003049</color>
+<!--        &lt;!&ndash;    Night mode  &ndash;&gt;-->
+<!--        <color name="gold_o">#8F4B03</color>-->
+<!--        <color name="blue_d">#003049</color>-->
     </style>
 </resources>

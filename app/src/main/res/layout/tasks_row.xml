@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tvTaskDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvTaskTitle"
             android:layout_toEndOf="@id/imageview"
@@ -52,15 +52,14 @@
 
         <Chronometer
             android:id="@+id/tvTimer"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/deleteTaskIcon"
+            android:padding="5dp"
             android:textColor="@color/blue"
             android:textSize="18sp"
-            android:padding="5dp"
-            android:layout_alignParentTop="true"
-            android:textStyle="italic"
-            android:layout_toStartOf="@id/deleteTaskIcon"/>
+            android:textStyle="italic" />
 
 
 <!--        <TextView-->

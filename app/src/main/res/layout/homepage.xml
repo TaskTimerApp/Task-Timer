@@ -27,6 +27,7 @@
             android:layout_height="50dp"
             android:src="@drawable/profile_ic"
             android:layout_gravity="center"
+            android:padding="2dp"
             app:layout_constraintStart_toStartOf="parent"/>
 
 
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="Username"
         android:layout_gravity="center"
-        android:paddingStart="5dp"
+        android:paddingStart="8dp"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -79,11 +80,11 @@
             android:id="@+id/totalTimerTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:textColor="@color/blue"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:layout_alignParentEnd="true"/>
+            android:layout_toEndOf="@id/totalTV"
+            />
 
 
     </RelativeLayout>
