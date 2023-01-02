@@ -18,10 +18,8 @@ import java.util.ArrayList
 
 class HomePageActivity : AppCompatActivity() {
 
-    val db = Firebase.firestore
-    var userId = ""
-    var userName = ""
-    var img = ""
+    private val db = Firebase.firestore
+    private lateinit var userData : Users
     private var tasksList: ArrayList<Tasks> = arrayListOf()
 
     /** Recycler View declare */
@@ -43,10 +41,7 @@ class HomePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
 
-
-        userId = intent.getStringExtra("userId").toString()
-        userName = intent.getStringExtra("userName").toString()
-        img = intent.getStringExtra("userImage").toString()
+        userData = intent.getSerializableExtra("userData") as Users
 
         profileIV = findViewById(R.id.profileIV)
         usernameTV = findViewById(R.id.usernameTV)
@@ -83,9 +78,7 @@ class HomePageActivity : AppCompatActivity() {
 
     private fun addTaskActivity() {
         val intent = Intent(this, AddTaskActivity::class.java)
-        intent.putExtra("userId", userId)
-        intent.putExtra("userName", userName)
-        intent.putExtra("userImage", img)
+        intent.putExtra("userData", userData)
         startActivity(intent)
     }
 
@@ -99,15 +92,8 @@ class HomePageActivity : AppCompatActivity() {
 
     fun taskDetailsActivity(taskData: Tasks) {
         val intent = Intent(this, TaskDetailsActivity::class.java)
-        intent.putExtra("userName", userName)
-        intent.putExtra("userImage", img)
-
-        intent.putExtra("taskPK", taskData.pk)
-        intent.putExtra("userId", taskData.userId)
-        intent.putExtra("taskName", taskData.name)
-        intent.putExtra("taskDetails", taskData.details)
-        intent.putExtra("timer", taskData.timer)
-        intent.putExtra("running", taskData.running)
+        intent.putExtra("userData", userData)
+        intent.putExtra("taskData", taskData)
         startActivity(intent)
     }
 
@@ -119,17 +105,17 @@ class HomePageActivity : AppCompatActivity() {
             .addOnSuccessListener { tasksResult ->
                 for (document in tasksResult) {
                     val userID = document.data.get("userId").toString()
-                    val name = document.data.get("name").toString()
-                    val details = document.data.get("details").toString()
+                    val title = document.data.get("title").toString()
+                    val description = document.data.get("description").toString()
                     val timer = document.data.get("timer")
                     val running = document.data.get("running")
-                    if (userID == userId) {
+                    if (userID == userData.pk) {
                         tasksList.add(
                             Tasks(
                                 document.id,
                                 userID,
-                                name,
-                                details,
+                                title,
+                                description,
                                 timer as Long,
                                 running as Boolean
                             )
@@ -145,9 +131,10 @@ class HomePageActivity : AppCompatActivity() {
     }
 
 
-    fun deleteTask(taskPK: Tasks){
+    fun deleteTask(taskData: Tasks){
+        //Asking user if approve delete the task "alertDialog"
         CoroutineScope(Dispatchers.IO).launch {
-            db.collection("userTasks").document(taskPK.pk).delete()
+            db.collection("userTasks").document(taskData.pk).delete()
             pauseOffset = 0
             readData()
         }
@@ -155,27 +142,26 @@ class HomePageActivity : AppCompatActivity() {
     }
 
 
-    fun getUserImage() {
+    private fun getUserImage() {
         try {
             Glide.with(this)
-                .load(img)
+                .load(userData.image)
                 .override(600, 200)
                 .into(profileIV)
-            usernameTV.text = userName
+            usernameTV.text = userData.username
         } catch (e:Exception){
             Log.d("Catch", "No image: $e")
         }
     }
 
 
-    fun calcTotalTimer(){
+    private fun calcTotalTimer(){
         for (i in 0 .. tasksList.size -1){
             pauseOffset += tasksList[i].timer
             if (tasksList[i].running){
                 totalRunning = true
             }
         }
-        Log.d("TotalTimer", "Total: $pauseOffset")
         totalTimerTV.setBase(SystemClock.elapsedRealtime() - pauseOffset)
         if (totalRunning) {
             totalTimerTV.start()

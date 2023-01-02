@@ -1,12 +1,10 @@
 package com.example.tasktimerapp
 
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.tasks_row.view.*
 
@@ -29,9 +27,8 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
         val taskList = tasksList[position]
 
         holder.itemView.apply {
-
-            tvTaskTitle.text = taskList.name
-            tvTaskDetails.text = taskList.details
+            tvTaskTitle.text = taskList.title
+            tvTaskDetails.text = taskList.description
             tvTimer.setBase(SystemClock.elapsedRealtime() - taskList.timer)
 
             /////////////////////////////////
@@ -48,9 +45,7 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
 
             taskCard.setOnClickListener{
                 if (taskList.running) {
-                    val pauseOffset = SystemClock.elapsedRealtime() - tvTimer.getBase()
-                    taskList.timer = pauseOffset
-                    Log.d("TimerAdapter", "Timer: ${taskList.timer}")
+                    taskList.timer = SystemClock.elapsedRealtime() - tvTimer.getBase()
                 }
                 activity.taskDetailsActivity(taskList)
             }
