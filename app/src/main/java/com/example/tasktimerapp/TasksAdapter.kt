@@ -2,20 +2,19 @@ package com.example.tasktimerapp
 
 import android.os.SystemClock
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.tasks_row.view.*
+import com.example.tasktimerapp.databinding.TasksRowBinding
 
-class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayList<Tasks>):
+class TasksAdapter(private val activity: HomePageActivity, private var tasksList: ArrayList<Tasks>):
     RecyclerView.Adapter<TasksAdapter.ItemViewHolder>() {
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ItemViewHolder(val binding: TasksRowBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.tasks_row,
+            TasksRowBinding.inflate(
+            LayoutInflater.from(parent.context),
                 parent,
                 false
             )
@@ -23,10 +22,9 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-
         val taskList = tasksList[position]
 
-        holder.itemView.apply {
+        holder.binding.apply {
             tvTaskTitle.text = taskList.title
             tvTaskDetails.text = taskList.description
             tvTimer.setBase(SystemClock.elapsedRealtime() - taskList.timer)
@@ -35,10 +33,10 @@ class TasksAdapter(var activity: HomePageActivity, private var tasksList: ArrayL
             ////////CHECK TIMER STATE///////
             if (taskList.running) {
                 tvTimer.start()
-                tvTimer.setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_dark))
+                tvTimer.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_orange_dark))
             }else{
                 tvTimer.stop()
-                tvTimer.setTextColor(ContextCompat.getColor(context,R.color.blue))
+                tvTimer.setTextColor(ContextCompat.getColor(activity,R.color.blue))
             }
             ///////////////////////////////
             //////////////////////////////

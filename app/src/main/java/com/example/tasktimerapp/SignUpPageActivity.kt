@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.tasktimerapp.databinding.ActivitySignupPageBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -16,23 +17,15 @@ import java.util.ArrayList
 
 class SignUpPageActivity : AppCompatActivity() {
 
+    lateinit var binding : ActivitySignupPageBinding
     private val db = Firebase.firestore
-
-    lateinit var userNameEtSignup : EditText
-    lateinit var userPasswordEtSignup : EditText
-    lateinit var imageURLEt : EditText
-    lateinit var signupBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_page)
+        binding = ActivitySignupPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        userNameEtSignup = findViewById(R.id.userNameEtSignup)
-        userPasswordEtSignup = findViewById(R.id.userPasswordEtSignup)
-        imageURLEt = findViewById(R.id.imageURLEt)
-        signupBtn = findViewById(R.id.signupBtn)
-
-        signupBtn.setOnClickListener { signupUser() }
+        binding.signupBtn.setOnClickListener { signupUser() }
 
     }
 
@@ -40,10 +33,10 @@ class SignUpPageActivity : AppCompatActivity() {
     /////////////////SIGNUP//////////////////////
     ////////////////////////////////////////////////
     private fun signupUser(){
-        if (userNameEtSignup.text.isNotEmpty() && userPasswordEtSignup.text.isNotEmpty() && imageURLEt.text.isNotEmpty()) {
-            val username = userNameEtSignup.text.toString()
-            val password = userPasswordEtSignup.text.toString()
-            val image = imageURLEt.text.toString()
+        if (binding.userNameEtSignup.text.isNotEmpty() && binding.userPasswordEtSignup.text.isNotEmpty() && binding.imageURLEt.text.isNotEmpty()) {
+            val username = binding.userNameEtSignup.text.toString()
+            val password = binding.userPasswordEtSignup.text.toString()
+            val image = binding.imageURLEt.text.toString()
 
             //check if the username is exist
             val isExist = checkUsername(username)

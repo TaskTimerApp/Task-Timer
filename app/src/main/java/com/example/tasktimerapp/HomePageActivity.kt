@@ -7,8 +7,8 @@ import android.os.SystemClock
 import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.tasktimerapp.databinding.ActivityHomePageBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -16,41 +16,27 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
+
 class HomePageActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityHomePageBinding
     private val db = Firebase.firestore
     private lateinit var userData : Users
     private var tasksList: ArrayList<Tasks> = arrayListOf()
 
     /** Recycler View declare */
-    private lateinit var rvTasks: RecyclerView
     private lateinit var rvAdapter: TasksAdapter
 
-    lateinit var btnAddTask : ImageButton
-    lateinit var logoutIcon : ImageButton
-
-    lateinit var profileIV : ImageView
-    lateinit var usernameTV : TextView
-
-    lateinit var totalTimerTV : Chronometer
     var pauseOffset : Long = 0
     var totalRunning : Boolean = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.homepage)
+        binding = ActivityHomePageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         userData = intent.getSerializableExtra("userData") as Users
-
-        profileIV = findViewById(R.id.profileIV)
-        usernameTV = findViewById(R.id.usernameTV)
         getUserImage()
-
-
-        totalTimerTV = findViewById(R.id.totalTimerTV)
-
-        rvTasks = findViewById(R.id.rvTasks)
 
         /////////////////////////////////
         ////////READ DATA FROM DB////////
@@ -62,16 +48,14 @@ class HomePageActivity : AppCompatActivity() {
         /////////////////////////////////
         ////////SHOW DATA ON RV////////
         rvAdapter = TasksAdapter(this, tasksList)
-        rvTasks.adapter = rvAdapter
-        rvTasks.layoutManager = LinearLayoutManager(this)
+        binding.rvTasks.adapter = rvAdapter
+        binding.rvTasks.layoutManager = LinearLayoutManager(this)
         //////////////////////////////////
         //////////////////////////////////
 
-        btnAddTask = findViewById(R.id.btnAddTask)
-        btnAddTask.setOnClickListener { addTaskActivity() }
 
-        logoutIcon = findViewById(R.id.logoutIcon)
-        logoutIcon.setOnClickListener { logout() }
+        binding.btnAddTask.setOnClickListener { addTaskActivity() }
+        binding.logoutIcon.setOnClickListener { logout() }
 
     }
 
@@ -147,8 +131,8 @@ class HomePageActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(userData.image)
                 .override(600, 200)
-                .into(profileIV)
-            usernameTV.text = userData.username
+                .into(binding.profileIV)
+            binding.usernameTV.text = userData.username
         } catch (e:Exception){
             Log.d("Catch", "No image: $e")
         }
@@ -162,11 +146,11 @@ class HomePageActivity : AppCompatActivity() {
                 totalRunning = true
             }
         }
-        totalTimerTV.setBase(SystemClock.elapsedRealtime() - pauseOffset)
+        binding.totalTimerTV.setBase(SystemClock.elapsedRealtime() - pauseOffset)
         if (totalRunning) {
-            totalTimerTV.start()
+            binding.totalTimerTV.start()
         } else {
-            totalTimerTV.stop()
+            binding.totalTimerTV.stop()
         }
     }
 }

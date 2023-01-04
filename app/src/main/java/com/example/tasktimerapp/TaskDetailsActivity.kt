@@ -4,10 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
-import android.widget.Chronometer
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
+import com.example.tasktimerapp.databinding.ActivityTaskDetailsBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -17,52 +15,30 @@ import java.util.ArrayList
 
 class TaskDetailsActivity : AppCompatActivity() {
 
+    lateinit var binding : ActivityTaskDetailsBinding
     private val db = Firebase.firestore
     private lateinit var userData : Users
     lateinit var taskData : Tasks
     private var tasksList: ArrayList<Tasks> = arrayListOf()
 
-
-    lateinit var tvTaskName : TextView
-    lateinit var tvTaskDetails : TextView
-    lateinit var tvTimer : Chronometer
-
-    lateinit var btnStart : ImageButton
-    lateinit var btnStop : ImageButton
-    lateinit var btnReset : ImageButton
-
-    lateinit var btnBack : ImageButton
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.task_details)
+        binding = ActivityTaskDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         userData = intent.getSerializableExtra("userData") as Users
         taskData = intent.getSerializableExtra("taskData") as Tasks
-
         readData()
 
-        tvTaskName = findViewById(R.id.tvTaskName)
-        tvTaskDetails = findViewById(R.id.tvTaskDetails)
+        binding.tvTaskName.text = taskData.title
+        binding.tvTaskDetails.text = taskData.description
+        binding.tvTimer.base = SystemClock.elapsedRealtime() - taskData.timer
 
-        tvTaskName.text = taskData.title
-        tvTaskDetails.text = taskData.description
-
-
-        tvTimer = findViewById(R.id.tvTimer)
-        tvTimer.base = SystemClock.elapsedRealtime() - taskData.timer
-
-
-        btnStart = findViewById(R.id.btnStart)
-        btnStop = findViewById(R.id.btnStop)
-        btnReset = findViewById(R.id.btnReset)
-        btnBack = findViewById(R.id.btnBack)
-
-        btnStart.setOnClickListener { start(taskData.running) }
-        btnStop.setOnClickListener { stop(taskData.running) }
-        btnReset.setOnClickListener { reset() }
-        btnBack.setOnClickListener { homePageActivity() }
+        binding.btnStart.setOnClickListener { start(taskData.running) }
+        binding.btnStop.setOnClickListener { stop(taskData.running) }
+        binding.btnReset.setOnClickListener { reset() }
+        binding.btnBack.setOnClickListener { homePageActivity() }
 
         //////////////////////////////////////
         ////////CHECK TIMER CONDITIONS////////
@@ -86,28 +62,70 @@ class TaskDetailsActivity : AppCompatActivity() {
 
             //Check if there are running timers
             checkRunningTimers(taskData.pk)
-            tvTimer.base = SystemClock.elapsedRealtime() - taskData.timer
-            tvTimer.start()
+            binding.tvTimer.base = SystemClock.elapsedRealtime() - taskData.timer
+            binding.tvTimer.start()
             taskData.running = true
             updateTimer()
 
-            btnStart.isClickable = false
-            btnStart.isEnabled = false
-            btnStop.isClickable = true
-            btnStop.isEnabled = true
-            btnReset.isClickable = true
-            btnReset.isEnabled = true
+            binding.btnStart.isClickable = false
+            binding.btnStart.isEnabled = false
+            binding.btnStop.isClickable = true
+            binding.btnStop.isEnabled = true
+            binding.btnReset.isClickable = true
+            binding.btnReset.isEnabled = true
         }
         else {
-            tvTimer.start()
-            btnStart.isClickable = false
-            btnStart.isEnabled = false
-            btnStop.isClickable = true
-            btnStop.isEnabled = true
-            btnReset.isClickable = true
-            btnReset.isEnabled = true
+            binding.tvTimer.start()
+            binding.btnStart.isClickable = false
+            binding.btnStart.isEnabled = false
+            binding.btnStop.isClickable = true
+            binding.btnStop.isEnabled = true
+            binding.btnReset.isClickable = true
+            binding.btnReset.isEnabled = true
         }
     }
+
+
+    //////////////////////////////////////////////////
+    //////////////////STOP BUTTON////////////////////
+    ////////////////////////////////////////////////
+    private fun stop(runningStatues : Boolean){
+        if (runningStatues) {
+            binding.tvTimer.stop()
+            taskData.timer = SystemClock.elapsedRealtime() - binding.tvTimer.base
+            taskData.running = false
+            updateTimer()
+
+            binding.btnStart.isClickable = true
+            binding.btnStart.isEnabled = true
+            binding.btnStop.isClickable = false
+            binding.btnStop.isEnabled = false
+        }
+        else {
+            binding.btnStop.isClickable = false
+            binding.btnStop.isEnabled = false
+        }
+    }
+
+
+    //////////////////////////////////////////////////
+    //////////////////RESET BUTTON///////////////////
+    ////////////////////////////////////////////////
+    private fun reset(){
+        binding.tvTimer.base = SystemClock.elapsedRealtime()
+        binding.tvTimer.stop()
+        taskData.timer = 0
+        taskData.running = false
+        updateTimer()
+
+        binding.btnStart.isClickable = true
+        binding.btnStart.isEnabled = true
+        binding.btnStop.isClickable = false
+        binding.btnStop.isEnabled = false
+        binding.btnReset.isClickable = false
+        binding.btnReset.isEnabled = false
+    }
+
 
     //////////////////////////////////////////////////
     //////////////////READ DATA//////////////////////
@@ -141,45 +159,6 @@ class TaskDetailsActivity : AppCompatActivity() {
             }
     }
 
-    //////////////////////////////////////////////////
-    //////////////////STOP BUTTON////////////////////
-    ////////////////////////////////////////////////
-    private fun stop(runningStatues : Boolean){
-        if (runningStatues) {
-            tvTimer.stop()
-            taskData.timer = SystemClock.elapsedRealtime() - tvTimer.base
-            taskData.running = false
-            updateTimer()
-
-            btnStart.isClickable = true
-            btnStart.isEnabled = true
-            btnStop.isClickable = false
-            btnStop.isEnabled = false
-        }
-        else {
-            btnStop.isClickable = false
-            btnStop.isEnabled = false
-        }
-    }
-
-    //////////////////////////////////////////////////
-    //////////////////RESET BUTTON///////////////////
-    ////////////////////////////////////////////////
-    private fun reset(){
-        tvTimer.base = SystemClock.elapsedRealtime()
-        taskData.timer = 0
-        taskData.running = false
-        tvTimer.stop()
-        updateTimer()
-
-        btnStart.isClickable = true
-        btnStart.isEnabled = true
-        btnStop.isClickable = false
-        btnStop.isEnabled = false
-        btnReset.isClickable = false
-        btnReset.isEnabled = false
-    }
-
 
     //////////////////////////////////////////////////////
     //////////////////UPDATE TASK DATA///////////////////
@@ -198,7 +177,7 @@ class TaskDetailsActivity : AppCompatActivity() {
     ////////////////////////////////////////////////////
     private fun homePageActivity() {
         if (taskData.running) {
-            taskData.timer = SystemClock.elapsedRealtime() - tvTimer.base
+            taskData.timer = SystemClock.elapsedRealtime() - binding.tvTimer.base
             updateTimer()
         }
         val intent = Intent(this, HomePageActivity::class.java)

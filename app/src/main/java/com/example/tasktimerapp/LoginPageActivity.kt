@@ -3,9 +3,8 @@ package com.example.tasktimerapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import com.example.tasktimerapp.databinding.ActivityLoginPageBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -15,34 +14,25 @@ import java.util.ArrayList
 
 class LoginPageActivity : AppCompatActivity() {
 
+    lateinit var binding : ActivityLoginPageBinding
     private val db = Firebase.firestore
     private lateinit var userData : Users
     private var usersList: ArrayList<Users> = arrayListOf()
 
-    lateinit var userNameEtLogin : EditText
-    lateinit var passwordEtLogin : EditText
-    lateinit var loginBtn : Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_page)
-
+        binding = ActivityLoginPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         userData = Users("","","", "")
-
-        //Login variable
-        userNameEtLogin = findViewById(R.id.userNameEtLogin)
-        passwordEtLogin = findViewById(R.id.passwordEtLogin)
-        loginBtn = findViewById(R.id.loginBtn)
-
-        loginBtn.setOnClickListener { loginUser() }
+        binding.loginBtn.setOnClickListener { loginUser() }
     }
 
     //////////////////////////////////////////////////
     //////////////////LOGIN//////////////////////////
     ////////////////////////////////////////////////
     private fun loginUser(){
-        if (userNameEtLogin.text.isNotEmpty() && passwordEtLogin.text.isNotEmpty()){
+        if (binding.userNameEtLogin.text.isNotEmpty() && binding.passwordEtLogin.text.isNotEmpty()){
             usersList.clear()
             CoroutineScope(Dispatchers.IO).launch {
                 db.collection("users")
@@ -70,8 +60,8 @@ class LoginPageActivity : AppCompatActivity() {
     //////////////////CHECK USER//////////////////////
     ////////////////////////////////////////////////
     private fun checkUser(){
-        val usernameET = userNameEtLogin.text.toString()
-        val passwordET = passwordEtLogin.text.toString()
+        val usernameET = binding.userNameEtLogin.text.toString()
+        val passwordET = binding.passwordEtLogin.text.toString()
         var exist = false
 
         for (i in 0 .. usersList.size -1) {

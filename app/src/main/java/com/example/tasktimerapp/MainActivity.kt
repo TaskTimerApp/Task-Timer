@@ -1,36 +1,22 @@
 package com.example.tasktimerapp
 
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.ArrayList
+import com.example.tasktimerapp.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var loginBtn : Button
-    lateinit var signupBtn : Button
+    lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        loginBtn = findViewById(R.id.loginBtn)
-        loginBtn.setOnClickListener { loginPageActivity() }
-
-        signupBtn = findViewById(R.id.signupBtn)
-        signupBtn.setOnClickListener { signupPageActivity() }
-
+        binding.loginBtn.setOnClickListener { loginPageActivity() }
+        binding.signupBtn.setOnClickListener { signupPageActivity() }
     }
 
 

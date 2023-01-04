@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import com.example.tasktimerapp.databinding.ActivityAddTaskBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -15,32 +14,24 @@ import kotlinx.coroutines.launch
 
 class AddTaskActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityAddTaskBinding
     private val db = Firebase.firestore
     private lateinit var userData : Users
-
-    private lateinit var taskTitleET: EditText
-    private lateinit var taskDescriptionET: EditText
-    private lateinit var btnAddTask: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.add_task)
+        binding = ActivityAddTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         userData = intent.getSerializableExtra("userData") as Users
-
-        taskTitleET = findViewById(R.id.taskTitleET)
-        taskDescriptionET = findViewById(R.id.taskDescriptionET)
-
-        btnAddTask = findViewById(R.id.btnAddTask)
-        btnAddTask.setOnClickListener { saveTask() }
+        binding.btnAddTask.setOnClickListener { saveTask() }
     }
 
-
     private fun saveTask(){
-        if (taskTitleET.text.isNotEmpty() && taskDescriptionET.text.isNotEmpty()) {
-            val title = taskTitleET.text.toString()
-            val description = taskDescriptionET.text.toString()
+        if (binding.taskTitleET.text.isNotEmpty() && binding.taskDescriptionET.text.isNotEmpty()) {
+            val title = binding.taskTitleET.text.toString()
+            val description = binding.taskDescriptionET.text.toString()
             val taskObj = TasksFB(userData.pk, title, description)
 
             CoroutineScope(Dispatchers.IO).launch {

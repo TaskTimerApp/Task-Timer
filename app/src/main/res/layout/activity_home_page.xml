@@ -31,17 +31,17 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
 
-    <TextView
-        android:id="@+id/usernameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:layout_gravity="center"
-        android:paddingStart="8dp"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/profile"/>
+        <TextView
+            android:id="@+id/usernameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:layout_gravity="center"
+            android:paddingStart="8dp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/profile"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -101,35 +101,36 @@
         tools:itemCount="6"
         tools:listitem="@layout/tasks_row" />
 
-        <LinearLayout
-            android:id="@+id/llayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="10dp"
-            android:gravity="end">
+    <LinearLayout
+        android:id="@+id/llayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="10dp"
+        android:gravity="end">
 
-            <ImageButton
-                android:id="@+id/btnAddTask"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Add Task"
-                android:layout_margin="2dp"
-                android:src="@drawable/add_ic"
-                android:background="@drawable/round_btn"/>
+        <ImageButton
+            android:id="@+id/btnAddTask"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="Add Task"
+            android:layout_margin="2dp"
+            android:src="@drawable/add_ic"
+            android:background="@drawable/round_btn"/>
 
-            <ImageButton
-                android:id="@+id/logoutIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:text="Login/Signup"
-                android:layout_margin="2dp"
-                android:src="@drawable/login_ic"
-                android:background="@drawable/round_btn"/>
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/logoutIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="Login/Signup"
+            android:layout_margin="2dp"
+            android:src="@drawable/login_ic"
+            android:background="@drawable/round_btn"/>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
