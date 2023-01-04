@@ -4,11 +4,12 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tasktimerapp.databinding.TasksRowBinding
 
-class TasksAdapter(private val activity: HomePageActivity, private var tasksList: ArrayList<Tasks>):
-    RecyclerView.Adapter<TasksAdapter.ItemViewHolder>() {
+class TasksAdapter(private val activity: HomePageActivity):
+    ListAdapter<Tasks, TasksAdapter.ItemViewHolder>(TasksDiffUtil()) {
     class ItemViewHolder(val binding: TasksRowBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -22,7 +23,7 @@ class TasksAdapter(private val activity: HomePageActivity, private var tasksList
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val taskList = tasksList[position]
+        val taskList = getItem(position)
 
         holder.binding.apply {
             tvTaskTitle.text = taskList.title
@@ -53,12 +54,12 @@ class TasksAdapter(private val activity: HomePageActivity, private var tasksList
 
     }
 
-    override fun getItemCount() = tasksList.size
 
-    fun rvUpdate(tasksListUpdate: ArrayList<Tasks>){
-        this.tasksList = tasksListUpdate
-        notifyDataSetChanged()
-    }
+
+//    fun rvUpdate(tasksListUpdate: ArrayList<Tasks>){
+//        this.tasksList = tasksListUpdate
+//        notifyDataSetChanged()
+//    }
 
 
 }

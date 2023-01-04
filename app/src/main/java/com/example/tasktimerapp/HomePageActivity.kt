@@ -38,6 +38,7 @@ class HomePageActivity : AppCompatActivity() {
         userData = intent.getSerializableExtra("userData") as Users
         getUserImage()
 
+
         /////////////////////////////////
         ////////READ DATA FROM DB////////
         tasksList = arrayListOf()
@@ -45,9 +46,10 @@ class HomePageActivity : AppCompatActivity() {
         //////////////////////////////////
         //////////////////////////////////
 
+
         /////////////////////////////////
         ////////SHOW DATA ON RV////////
-        rvAdapter = TasksAdapter(this, tasksList)
+        rvAdapter = TasksAdapter(this)
         binding.rvTasks.adapter = rvAdapter
         binding.rvTasks.layoutManager = LinearLayoutManager(this)
         //////////////////////////////////
@@ -83,7 +85,7 @@ class HomePageActivity : AppCompatActivity() {
 
 
     private fun readData(){
-        tasksList.clear()
+        //tasksList.clear()
         db.collection("userTasks")
             .get()
             .addOnSuccessListener { tasksResult ->
@@ -106,7 +108,7 @@ class HomePageActivity : AppCompatActivity() {
                         )
                     }
                 }
-                rvAdapter.rvUpdate(tasksList)
+                rvAdapter.submitList(tasksList)
                 calcTotalTimer()
             }
             .addOnFailureListener { exception ->
@@ -121,6 +123,7 @@ class HomePageActivity : AppCompatActivity() {
             db.collection("userTasks").document(taskData.pk).delete()
             pauseOffset = 0
             readData()
+            Log.d("ReadData", "Read: ")
         }
         Toast.makeText(this, "Deleted", Toast.LENGTH_LONG).show()
     }
